@@ -18,7 +18,11 @@
         <!-- Ramp List -->
         <DockPanel Grid.Column="0" Margin="10,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Button DockPanel.Dock="Bottom" Content="Add New" Height="Auto"></Button>
-            <GroupBox DockPanel.Dock="Top" Margin="0,0,0,10" Header="Ramp List"></GroupBox>
+            <GroupBox DockPanel.Dock="Top" Margin="0,0,0,10" Header="Ramp List">
+                <ListBox IsSynchronizedWithCurrentItem="True"
+                         ItemsSource="{Binding ColorRamps}"
+                         SelectedItem="{Binding SelectedColorRamp, Mode=TwoWay}"/>
+            </GroupBox>
         </DockPanel>
         
         <!-- Separator -->
@@ -43,51 +47,57 @@
                     </Grid.RowDefinitions>
                     
                     <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" BorderThickness="2" BorderBrush="Black">
-                        <Canvas Width="100" Height="100"></Canvas>
+                        <Canvas Width="100" Height="100" Background="{Binding SelectedColorRampBrush}"/>
                     </Border>
                     
-                    <Slider Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="255" Margin="5" VerticalAlignment="Center"></Slider>
-                    <Slider Grid.Column="1" Grid.Row="1" Minimum="0" Maximum="255" Margin="5" VerticalAlignment="Center"></Slider>
-                    <Slider Grid.Column="1" Grid.Row="2" Minimum="0" Maximum="255" Margin="5" VerticalAlignment="Center"></Slider>
+                    <Slider Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="360" Margin="5" VerticalAlignment="Center"
+                            Value="{Binding SelectedColorRamp.BaseColor.Hue}"/>
+                    <Slider Grid.Column="1" Grid.Row="1" Minimum="0" Maximum="100" Margin="5" VerticalAlignment="Center"
+                            Value="{Binding SelectedColorRamp.BaseColor.Saturation}"/>
+                    <Slider Grid.Column="1" Grid.Row="2" Minimum="0" Maximum="100" Margin="5" VerticalAlignment="Center"
+                            Value="{Binding SelectedColorRamp.BaseColor.Brightness}"/>
                     
-                    <TextBox Grid.Column="2" Grid.Row="0" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"></TextBox>
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"></TextBox>
-                    <TextBox Grid.Column="2" Grid.Row="2" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+                    <TextBox Grid.Column="2" Grid.Row="0" TextAlignment="Center" VerticalContentAlignment="Center"
+                             Text="{Binding SelectedColorRamp.BaseColor.Hue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Column="2" Grid.Row="1" TextAlignment="Center" VerticalContentAlignment="Center"
+                             Text="{Binding SelectedColorRamp.BaseColor.Saturation}"/>
+                    <TextBox Grid.Column="2" Grid.Row="2" TextAlignment="Center" VerticalContentAlignment="Center"
+                             Text="{Binding SelectedColorRamp.BaseColor.Brightness}"/>
                     
-                    <Label Grid.Column="3" Grid.Row="0" Content="Hue" VerticalAlignment="Center"></Label>
-                    <Label Grid.Column="3" Grid.Row="1" Content="Saturation" VerticalAlignment="Center"></Label>
-                    <Label Grid.Column="3" Grid.Row="2" Content="Brightness" VerticalAlignment="Center"></Label>
+                    <Label Grid.Column="3" Grid.Row="0" Content="Hue" VerticalAlignment="Center"/>
+                    <Label Grid.Column="3" Grid.Row="1" Content="Saturation" VerticalAlignment="Center"/>
+                    <Label Grid.Column="3" Grid.Row="2" Content="Brightness" VerticalAlignment="Center"/>
                 </Grid>
             </GroupBox>
             
             <!-- Ramp Size -->
             <GroupBox Header="Ramp Size">
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="3" Margin="10"></RadioButton>
-                    <RadioButton Content="5" Margin="10"></RadioButton>
-                    <RadioButton Content="7" Margin="10"></RadioButton>
-                    <RadioButton Content="9" Margin="10"></RadioButton>
+                    <RadioButton Content="3" Margin="10"/>
+                    <RadioButton Content="5" Margin="10"/>
+                    <RadioButton Content="7" Margin="10"/>
+                    <RadioButton Content="9" Margin="10"/>
                 </StackPanel>
             </GroupBox>
             
             <!-- Hue Shift -->
             <GroupBox Header="Hue Shift">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="0" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="0" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
                     <ComboBox IsEditable="False" Margin="15,0,0,0">
-                        <ComboBoxItem Content="No Shift"></ComboBoxItem>
-                        <ComboBoxItem Content="Small"></ComboBoxItem>
-                        <ComboBoxItem Content="Medium" IsSelected="True"></ComboBoxItem>
-                        <ComboBoxItem Content="Large"></ComboBoxItem>
-                        <ComboBoxItem Content="Custom"></ComboBoxItem>
+                        <ComboBoxItem Content="No Shift"/>
+                        <ComboBoxItem Content="Small"/>
+                        <ComboBoxItem Content="Medium" IsSelected="True"/>
+                        <ComboBoxItem Content="Large"/>
+                        <ComboBoxItem Content="Custom"/>
                     </ComboBox>
                 </StackPanel>
             </GroupBox>
@@ -95,21 +105,21 @@
             <!-- Saturation Shift -->
             <GroupBox Header="Saturation Shift">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="0" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="0" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
                     <ComboBox IsEditable="False" Margin="15,0,0,0">
-                        <ComboBoxItem Content="No Shift"></ComboBoxItem>
-                        <ComboBoxItem Content="To the Left"></ComboBoxItem>
-                        <ComboBoxItem Content="To the Right"></ComboBoxItem>
-                        <ComboBoxItem Content="Both" IsSelected="True"></ComboBoxItem>
-                        <ComboBoxItem Content="Custom"></ComboBoxItem>
+                        <ComboBoxItem Content="No Shift"/>
+                        <ComboBoxItem Content="To the Left"/>
+                        <ComboBoxItem Content="To the Right"/>
+                        <ComboBoxItem Content="Both" IsSelected="True"/>
+                        <ComboBoxItem Content="Custom"/>
                     </ComboBox>
                 </StackPanel>
             </GroupBox>
@@ -117,21 +127,21 @@
             <!-- Brightness Shift -->
             <GroupBox Header="Brightness Shift">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="0" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"></TextBox>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="0" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
                     <ComboBox IsEditable="False" Margin="15,0,0,0">
-                        <ComboBoxItem Content="No Shift"></ComboBoxItem>
-                        <ComboBoxItem Content="Small"></ComboBoxItem>
-                        <ComboBoxItem Content="Medium" IsSelected="True"></ComboBoxItem>
-                        <ComboBoxItem Content="Large"></ComboBoxItem>
-                        <ComboBoxItem Content="Custom"></ComboBoxItem>
+                        <ComboBoxItem Content="No Shift"/>
+                        <ComboBoxItem Content="Small"/>
+                        <ComboBoxItem Content="Medium" IsSelected="True"/>
+                        <ComboBoxItem Content="Large"/>
+                        <ComboBoxItem Content="Custom"/>
                     </ComboBox>
                 </StackPanel>
             </GroupBox>
