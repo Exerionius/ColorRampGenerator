@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using ColorRampGenerator.Prism;
-using ColorRampGenerator.Tools;
 
 namespace ColorRampGenerator.Models
 {
@@ -25,21 +25,15 @@ namespace ColorRampGenerator.Models
             }
         }
 
-        public TrulyObservableCollection<HsbColor> Colors { get; }
+        public ObservableCollection<HsbColor> Colors { get; }
 
         public ColorRamp(HsbColor baseColor, int size)
         {
-            Colors = new TrulyObservableCollection<HsbColor>();
+            Colors = new ObservableCollection<HsbColor>();
             for (var i = 0; i < size; i++)
             {
                 Colors.Add(baseColor.Clone());
             }
-
-            Colors.CollectionChanged += (sender, args) =>
-            {
-                RaisePropertyChanged(nameof(Size));
-                RaisePropertyChanged(nameof(Colors));
-            };
 
             BaseColor.PropertyChanged += BaseColorOnPropertyChanged;
         }
