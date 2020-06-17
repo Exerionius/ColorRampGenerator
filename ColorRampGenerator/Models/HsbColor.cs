@@ -44,5 +44,15 @@ namespace ColorRampGenerator.Models
             Saturation = saturation;
             Brightness = brightness;
         }
+
+        public HsbColor Clone()
+        {
+            return new HsbColor(Hue, Saturation, Brightness);
+        }
+
+        public override string ToString()
+        {
+            return $"({Hue},{Saturation},{Brightness})";
+        }
     }
 }

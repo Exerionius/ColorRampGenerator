@@ -4,9 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:ColorRampGenerator.ViewModels"
+        xmlns:conv="clr-namespace:ColorRampGenerator.Converters"
         mc:Ignorable="d"
         Title="Color Ramp Generator" Height="450" Width="800" MinHeight="450" MinWidth="660"
         d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=true}">
+    <Window.Resources>
+        <conv:IntToRadioBoolConverter x:Key="IntToRadioBoolConverter"/>
+    </Window.Resources>
+    
     <Grid>
         
         <Grid.ColumnDefinitions>
@@ -73,10 +78,10 @@
             <!-- Ramp Size -->
             <GroupBox Header="Ramp Size">
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="3" Margin="10"/>
-                    <RadioButton Content="5" Margin="10"/>
-                    <RadioButton Content="7" Margin="10"/>
-                    <RadioButton Content="9" Margin="10"/>
+                    <RadioButton Content="3" Margin="10" IsChecked="{Binding SelectedColorRamp.Size, Converter={StaticResource IntToRadioBoolConverter}, ConverterParameter=3}"/>
+                    <RadioButton Content="5" Margin="10" IsChecked="{Binding SelectedColorRamp.Size, Converter={StaticResource IntToRadioBoolConverter}, ConverterParameter=5}"/>
+                    <RadioButton Content="7" Margin="10" IsChecked="{Binding SelectedColorRamp.Size, Converter={StaticResource IntToRadioBoolConverter}, ConverterParameter=7}"/>
+                    <RadioButton Content="9" Margin="10" IsChecked="{Binding SelectedColorRamp.Size, Converter={StaticResource IntToRadioBoolConverter}, ConverterParameter=9}"/>
                 </StackPanel>
             </GroupBox>
             

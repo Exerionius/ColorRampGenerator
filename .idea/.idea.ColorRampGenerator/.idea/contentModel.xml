@@ -7,6 +7,9 @@
       <e p="ColorRampGenerator" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="ColorRampGenerator.csproj" t="IncludeRecursive" />
+        <e p="Converters" t="Include">
+          <e p="IntToRadioBoolConverter.cs" t="Include" />
+        </e>
         <e p="Models" t="Include">
           <e p="ColorRamp.cs" t="Include" />
           <e p="HsbColor.cs" t="Include" />
