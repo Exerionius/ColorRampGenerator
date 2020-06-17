@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows.Media;
 using ColorRampGenerator.Prism;
+using ColorRampGenerator.Tools;
 
 namespace ColorRampGenerator.Models
 {
@@ -12,6 +14,7 @@ namespace ColorRampGenerator.Models
             {
                 _hue = Math.Clamp(value, 0, 360);
                 RaisePropertyChanged(nameof(Hue));
+                RaisePropertyChanged(nameof(Brush));
             }
         }
         private double _hue;
@@ -23,6 +26,7 @@ namespace ColorRampGenerator.Models
             {
                 _saturation = Math.Clamp(value / 100.0, 0, 100);
                 RaisePropertyChanged(nameof(Saturation));
+                RaisePropertyChanged(nameof(Brush));
             }
         }
         private double _saturation;
@@ -34,9 +38,12 @@ namespace ColorRampGenerator.Models
             {
                 _brightness = Math.Clamp(value / 100.0, 0, 100);
                 RaisePropertyChanged(nameof(Brightness));
+                RaisePropertyChanged(nameof(Brush));
             }
         }
         private double _brightness;
+        
+        public SolidColorBrush Brush => new SolidColorBrush(ColorHelper.GetRgb(this));
 
         public HsbColor(int hue, int saturation, int brightness)
         {
