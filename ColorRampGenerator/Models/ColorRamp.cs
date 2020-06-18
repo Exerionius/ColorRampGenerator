@@ -22,16 +22,19 @@ namespace ColorRampGenerator.Models
                 RaisePropertyChanged(nameof(Size));
                 RaisePropertyChanged(nameof(Colors));
                 RaisePropertyChanged(nameof(HueShifts));
+                RaisePropertyChanged(nameof(SaturationShifts));
             }
         }
 
         public ObservableCollection<HsbColor> Colors { get; }
         public ObservableCollection<Shift> HueShifts { get; }
+        public ObservableCollection<Shift> SaturationShifts { get; }
 
         public ColorRamp(HsbColor baseColor, int size)
         {
             Colors = new ObservableCollection<HsbColor>();
             HueShifts = new ObservableCollection<Shift>();
+            SaturationShifts = new ObservableCollection<Shift>();
             
             Init(baseColor, size);
             ApplyShifts();
@@ -42,13 +45,15 @@ namespace ColorRampGenerator.Models
 
         private void Init(HsbColor baseColor, int size)
         {
-            foreach (var hueShift in HueShifts)
+            for(var i = 0; i < HueShifts.Count; i++)
             {
-                hueShift.PropertyChanged -= OnHueShiftPropertyChange;
+                HueShifts[i].PropertyChanged -= OnShiftPropertyChange;
+                SaturationShifts[i].PropertyChanged -= OnShiftPropertyChange;
             }
             
             Colors.Clear();
             HueShifts.Clear();
+            SaturationShifts.Clear();
             
             var middle = size / 2;
             for (var i = 0; i < size; i++)
@@ -57,19 +62,23 @@ namespace ColorRampGenerator.Models
                 {
                     Colors.Add(baseColor.Clone());
                     HueShifts.Add(-15);
+                    SaturationShifts.Add(-15);
                 }
                 else if (i == middle)
                 {
                     Colors.Add(baseColor);
                     HueShifts.Add(0);
+                    SaturationShifts.Add(0);
                 }
                 else
                 {
                     Colors.Add(baseColor.Clone());
                     HueShifts.Add(15);
+                    SaturationShifts.Add(-15);
                 }
 
-                HueShifts[i].PropertyChanged += OnHueShiftPropertyChange;
+                HueShifts[i].PropertyChanged += OnShiftPropertyChange;
+                SaturationShifts[i].PropertyChanged += OnShiftPropertyChange;
             }
         }
 
@@ -79,21 +88,27 @@ namespace ColorRampGenerator.Models
             var baseColor = BaseColor;
             
             var totalHueShift = 0;
+            var totalSaturationShift = 0;
             for (var i = middle - 1; i >= 0; i--)
             {
                 totalHueShift += HueShifts[i];
+                totalSaturationShift += SaturationShifts[i];
                 Colors[i].Hue = baseColor.Hue + totalHueShift;
+                Colors[i].Saturation = baseColor.Saturation + totalSaturationShift;
             }
 
             totalHueShift = 0;
+            totalSaturationShift = 0;
             for (var i = middle + 1; i < Colors.Count; i++)
             {
                 totalHueShift += HueShifts[i];
+                totalSaturationShift += SaturationShifts[i];
                 Colors[i].Hue = baseColor.Hue + totalHueShift;
+                Colors[i].Saturation = baseColor.Saturation + totalSaturationShift;
             }
         }
 
-        private void OnHueShiftPropertyChange(object sender, PropertyChangedEventArgs args)
+        private void OnShiftPropertyChange(object sender, PropertyChangedEventArgs args)
         {
             ApplyShifts();
         }
