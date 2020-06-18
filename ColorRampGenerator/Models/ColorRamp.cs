@@ -13,6 +13,8 @@ namespace ColorRampGenerator.Models
             get => Colors.Count;
             set
             {
+                if(Colors.Count == value) return;
+                
                 var baseColor = BaseColor;
                 Colors.Clear();
                 var middle = value / 2;

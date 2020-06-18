@@ -24,8 +24,7 @@
         <DockPanel Grid.Column="0" Margin="10,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Button DockPanel.Dock="Bottom" Content="Add New" Height="Auto"></Button>
             <GroupBox DockPanel.Dock="Top" Margin="0,0,0,10" Header="Ramp List">
-                <ListBox IsSynchronizedWithCurrentItem="True"
-                         HorizontalContentAlignment="Stretch"
+                <ListBox HorizontalContentAlignment="Stretch"
                          ItemsSource="{Binding ColorRamps}"
                          SelectedItem="{Binding SelectedColorRamp, Mode=TwoWay}">
                     <ListBox.ItemTemplate>
