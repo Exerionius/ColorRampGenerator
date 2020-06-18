@@ -26,7 +26,7 @@ namespace ColorRampGenerator.Prism
         /// <param name="executeMethod">Delegate to execute when Execute is called on the command. This can be null to just hook up a CanExecute delegate.</param>
         /// <param name="canExecuteMethod">Delegate to execute when CanExecute is called on the command. This can be null.</param>
         /// <exception cref="ArgumentNullException">When both <paramref name="executeMethod"/> and <paramref name="canExecuteMethod"/> are <see langword="null" />.</exception>
-        private DelegateCommand(Action<T> executeMethod, Func<T, bool> canExecuteMethod)
+        public DelegateCommand(Action<T> executeMethod, Func<T, bool> canExecuteMethod)
         {
             if (executeMethod == null || canExecuteMethod == null)
                 throw new ArgumentNullException(nameof(executeMethod), "Neither the executeMethod nor the canExecuteMethod delegates can be null.");
