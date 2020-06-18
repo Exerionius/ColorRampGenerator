@@ -16,5 +16,10 @@
             DefaultSelected = defaultSelected;
             Custom = custom;
         }
+
+        public ShiftsPreset Clone()
+        {
+            return new ShiftsPreset(LeftShift, RightShift, Name, DefaultSelected, Custom);
+        }
     }
 }

@@ -124,6 +124,14 @@ namespace ColorRampGenerator.Models
                 => ApplyShifts();
         }
 
+        public ColorRamp Clone()
+        {
+            return new ColorRamp(BaseColor.Clone(), Colors.Count,
+                HueShiftsPresets.Select(p => p.Clone()),
+                SaturationShiftsPresets.Select(p => p.Clone()),
+                BrightnessShiftsPresets.Select(p => p.Clone()));
+        }
+
         private void Init(HsbColor baseColor, int size)
         {
             for(var i = 0; i < HueShifts.Count; i++)

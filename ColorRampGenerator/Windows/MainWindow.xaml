@@ -23,7 +23,7 @@
         
         <!-- Ramp List -->
         <DockPanel Grid.Column="0" Margin="10,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button DockPanel.Dock="Bottom" Content="Add New" Height="Auto"></Button>
+            <Button DockPanel.Dock="Bottom" Content="Add New" Height="Auto" Command="{Binding AddColorRampCommand}"/>
             <GroupBox DockPanel.Dock="Top" Margin="0,0,0,10" Header="Ramp List">
                 <ListBox HorizontalContentAlignment="Stretch"
                          ItemsSource="{Binding ColorRamps}"

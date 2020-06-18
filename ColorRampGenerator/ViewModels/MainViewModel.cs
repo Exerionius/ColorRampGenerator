@@ -21,6 +21,8 @@ namespace ColorRampGenerator.ViewModels
             }
         }
         private ColorRamp _selectedColorRamp;
+        
+        public DelegateCommand AddColorRampCommand { get; }
 
         public MainViewModel()
         {
@@ -50,12 +52,17 @@ namespace ColorRampGenerator.ViewModels
             };
             ColorRamps = new ObservableCollection<ColorRamp>
             {
-                new ColorRamp(_defaultColor.Clone(), 5, huePresets, saturationPresets, brightnessPresets),
-                new ColorRamp(_defaultColor.Clone(), 3, huePresets, saturationPresets, brightnessPresets),
-                new ColorRamp(_defaultColor.Clone(), 7, huePresets, saturationPresets, brightnessPresets),
-                new ColorRamp(_defaultColor.Clone(), 9, huePresets, saturationPresets, brightnessPresets)
+                new ColorRamp(_defaultColor.Clone(), 5, huePresets, saturationPresets, brightnessPresets)
             };
             SelectedColorRamp = ColorRamps[0];
+            
+            AddColorRampCommand = new DelegateCommand(AddColorRamp);
+        }
+
+        private void AddColorRamp()
+        {
+            ColorRamps.Add(SelectedColorRamp.Clone());
+            SelectedColorRamp = ColorRamps[^1];
         }
     }
 }
