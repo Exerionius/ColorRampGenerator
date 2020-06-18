@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using ColorRampGenerator.Models;
 using ColorRampGenerator.Prism;
 
@@ -23,10 +24,36 @@ namespace ColorRampGenerator.ViewModels
 
         public MainViewModel()
         {
+            var huePresets = new List<ShiftsPreset>
+            {
+                new ShiftsPreset(0, 0, "No Shift"),
+                new ShiftsPreset(-5, 5, "Small"),
+                new ShiftsPreset(-10, 10, "Medium", true),
+                new ShiftsPreset(-20, 20, "Large"),
+                new ShiftsPreset(0, 0, "Custom", custom: true)
+            };
+            var saturationPresets = new List<ShiftsPreset>
+            {
+                new ShiftsPreset(0, 0, "No Shift"),
+                new ShiftsPreset(-10, 10, "Desaturated Shadows"),
+                new ShiftsPreset(10, -10, "Desaturated Highlights"),
+                new ShiftsPreset(-10, -10, "Desaturated Both", true),
+                new ShiftsPreset(0, 0, "Custom", custom: true)
+            };
+            var brightnessPresets = new List<ShiftsPreset>
+            {
+                new ShiftsPreset(0, 0, "No Shift"),
+                new ShiftsPreset(-5, 5, "Small"),
+                new ShiftsPreset(-10, 10, "Medium", true),
+                new ShiftsPreset(-20, 20, "Large"),
+                new ShiftsPreset(0, 0, "Custom", custom: true)
+            };
             ColorRamps = new ObservableCollection<ColorRamp>
             {
-                new ColorRamp(_defaultColor.Clone(), 5),
-                new ColorRamp(_defaultColor.Clone(), 3)
+                new ColorRamp(_defaultColor.Clone(), 5, huePresets, saturationPresets, brightnessPresets),
+                new ColorRamp(_defaultColor.Clone(), 3, huePresets, saturationPresets, brightnessPresets),
+                new ColorRamp(_defaultColor.Clone(), 7, huePresets, saturationPresets, brightnessPresets),
+                new ColorRamp(_defaultColor.Clone(), 9, huePresets, saturationPresets, brightnessPresets)
             };
             SelectedColorRamp = ColorRamps[0];
         }

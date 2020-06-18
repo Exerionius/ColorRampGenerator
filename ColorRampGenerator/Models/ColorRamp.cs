@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using ColorRampGenerator.Prism;
 
 namespace ColorRampGenerator.Models
@@ -31,13 +33,89 @@ namespace ColorRampGenerator.Models
         public ObservableCollection<Shift> HueShifts { get; }
         public ObservableCollection<Shift> SaturationShifts { get; }
         public ObservableCollection<Shift> BrightnessShifts { get; }
+        
+        public ObservableCollection<ShiftsPreset> HueShiftsPresets { get; }
+        public ShiftsPreset SelectedHueShiftsPreset
+        {
+            get => _selectedHueShiftsPreset;
+            set
+            {
+                _selectedHueShiftsPreset = value;
+                
+                var baseColor = BaseColor;
+                Init(baseColor, Colors.Count);
+                ApplyShifts();
+                
+                RaisePropertyChanged(nameof(SelectedHueShiftsPreset));
+                RaisePropertyChanged(nameof(Colors));
+                RaisePropertyChanged(nameof(HueShifts));
+                RaisePropertyChanged(nameof(SaturationShifts));
+                RaisePropertyChanged(nameof(BrightnessShifts));
+            }
+        }
+        private ShiftsPreset _selectedHueShiftsPreset;
+        
+        public ObservableCollection<ShiftsPreset> SaturationShiftsPresets { get; }
+        public ShiftsPreset SelectedSaturationShiftsPreset
+        {
+            get => _selectedSaturationShiftsPreset;
+            set
+            {
+                _selectedSaturationShiftsPreset = value;
+                
+                var baseColor = BaseColor;
+                Init(baseColor, Colors.Count);
+                ApplyShifts();
+                
+                RaisePropertyChanged(nameof(SelectedSaturationShiftsPreset));
+                RaisePropertyChanged(nameof(Colors));
+                RaisePropertyChanged(nameof(HueShifts));
+                RaisePropertyChanged(nameof(SaturationShifts));
+                RaisePropertyChanged(nameof(BrightnessShifts));
+            }
+        }
+        private ShiftsPreset _selectedSaturationShiftsPreset;
+        
+        public ObservableCollection<ShiftsPreset> BrightnessShiftsPresets { get; }
+        public ShiftsPreset SelectedBrightnessShiftsPreset
+        {
+            get => _selectedBrightnessShiftsPreset;
+            set
+            {
+                _selectedBrightnessShiftsPreset = value;
+                
+                var baseColor = BaseColor;
+                Init(baseColor, Colors.Count);
+                ApplyShifts();
+                
+                RaisePropertyChanged(nameof(SelectedBrightnessShiftsPreset));
+                RaisePropertyChanged(nameof(Colors));
+                RaisePropertyChanged(nameof(HueShifts));
+                RaisePropertyChanged(nameof(SaturationShifts));
+                RaisePropertyChanged(nameof(BrightnessShifts));
+            }
+        }
+        private ShiftsPreset _selectedBrightnessShiftsPreset;
 
-        public ColorRamp(HsbColor baseColor, int size)
+        public ColorRamp(HsbColor baseColor, int size, IEnumerable<ShiftsPreset> huePresets,
+            IEnumerable<ShiftsPreset> saturationPresets, IEnumerable<ShiftsPreset> brightnessPresets)
         {
             Colors = new ObservableCollection<HsbColor>();
             HueShifts = new ObservableCollection<Shift>();
             SaturationShifts = new ObservableCollection<Shift>();
             BrightnessShifts = new ObservableCollection<Shift>();
+            
+            HueShiftsPresets = new ObservableCollection<ShiftsPreset>(huePresets);
+            _selectedHueShiftsPreset = HueShiftsPresets.First(p => p.DefaultSelected)
+                                       ?? HueShiftsPresets[0];
+            
+            SaturationShiftsPresets = new ObservableCollection<ShiftsPreset>(saturationPresets);
+            _selectedSaturationShiftsPreset = SaturationShiftsPresets.First(p => p.DefaultSelected)
+                                              ?? SaturationShiftsPresets[0];
+            
+            BrightnessShiftsPresets = new ObservableCollection<ShiftsPreset>(brightnessPresets);
+            _selectedBrightnessShiftsPreset = BrightnessShiftsPresets.First(p => p.DefaultSelected)
+                                              ?? BrightnessShiftsPresets[0];
             
             Init(baseColor, size);
             ApplyShifts();
@@ -66,9 +144,9 @@ namespace ColorRampGenerator.Models
                 if (i < middle)
                 {
                     Colors.Add(baseColor.Clone());
-                    HueShifts.Add(-15);
-                    SaturationShifts.Add(-15);
-                    BrightnessShifts.Add(-10);
+                    HueShifts.Add(_selectedHueShiftsPreset.LeftShift);
+                    SaturationShifts.Add(_selectedSaturationShiftsPreset.LeftShift);
+                    BrightnessShifts.Add(_selectedBrightnessShiftsPreset.LeftShift);
                 }
                 else if (i == middle)
                 {
@@ -80,9 +158,9 @@ namespace ColorRampGenerator.Models
                 else
                 {
                     Colors.Add(baseColor.Clone());
-                    HueShifts.Add(15);
-                    SaturationShifts.Add(-15);
-                    BrightnessShifts.Add(10);
+                    HueShifts.Add(_selectedHueShiftsPreset.RightShift);
+                    SaturationShifts.Add(_selectedSaturationShiftsPreset.RightShift);
+                    BrightnessShifts.Add(_selectedBrightnessShiftsPreset.RightShift);
                 }
 
                 HueShifts[i].PropertyChanged += OnShiftPropertyChange;

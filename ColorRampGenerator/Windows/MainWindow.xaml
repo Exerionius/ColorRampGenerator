@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:ColorRampGenerator.ViewModels"
         xmlns:conv="clr-namespace:ColorRampGenerator.Converters"
         mc:Ignorable="d"
-        Title="Color Ramp Generator" Height="450" Width="800" MinHeight="450" MinWidth="660"
+        Title="Color Ramp Generator" Height="450" Width="810" MinHeight="450" MinWidth="810"
         d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=true}">
     <Window.Resources>
         <conv:IntToRadioBoolConverter x:Key="IntToRadioBoolConverter"/>
@@ -111,7 +111,7 @@
             <!-- Hue Shift -->
             <GroupBox Header="Hue Shift">
                 <StackPanel Orientation="Horizontal">
-                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.HueShifts}">
+                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.HueShifts}" IsEnabled="{Binding SelectedColorRamp.SelectedHueShiftsPreset.Custom}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="{Binding SelectedColorRamp.HueShifts.Count}" Rows="1"/>
@@ -125,16 +125,18 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
-                                         Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntToSignedStringConverter}}"/>
+                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ComboBox IsEditable="False" Margin="15,0,0,0">
-                        <ComboBoxItem Content="No Shift"/>
-                        <ComboBoxItem Content="Small"/>
-                        <ComboBoxItem Content="Medium" IsSelected="True"/>
-                        <ComboBoxItem Content="Large"/>
-                        <ComboBoxItem Content="Custom"/>
+                    <ComboBox IsEditable="False" Margin="15,0,0,0"
+                              ItemsSource="{Binding SelectedColorRamp.HueShiftsPresets}"
+                              SelectedItem="{Binding SelectedColorRamp.SelectedHueShiftsPreset}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
             </GroupBox>
@@ -142,7 +144,7 @@
             <!-- Saturation Shift -->
             <GroupBox Header="Saturation Shift">
                 <StackPanel Orientation="Horizontal">
-                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.SaturationShifts}">
+                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.SaturationShifts}" IsEnabled="{Binding SelectedColorRamp.SelectedSaturationShiftsPreset.Custom}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="{Binding SelectedColorRamp.SaturationShifts.Count}" Rows="1"/>
@@ -156,16 +158,18 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
-                                         Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntToSignedStringConverter}}"/>
+                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ComboBox IsEditable="False" Margin="15,0,0,0">
-                        <ComboBoxItem Content="No Shift"/>
-                        <ComboBoxItem Content="To the Left"/>
-                        <ComboBoxItem Content="To the Right"/>
-                        <ComboBoxItem Content="Both" IsSelected="True"/>
-                        <ComboBoxItem Content="Custom"/>
+                    <ComboBox IsEditable="False" Margin="15,0,0,0"
+                              ItemsSource="{Binding SelectedColorRamp.SaturationShiftsPresets}"
+                              SelectedItem="{Binding SelectedColorRamp.SelectedSaturationShiftsPreset}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
             </GroupBox>
@@ -173,7 +177,7 @@
             <!-- Brightness Shift -->
             <GroupBox Header="Brightness Shift">
                 <StackPanel Orientation="Horizontal">
-                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.BrightnessShifts}">
+                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.BrightnessShifts}" IsEnabled="{Binding SelectedColorRamp.SelectedBrightnessShiftsPreset.Custom}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="{Binding SelectedColorRamp.BrightnessShifts.Count}" Rows="1"/>
@@ -187,16 +191,18 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
-                                         Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntToSignedStringConverter}}"/>
+                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ComboBox IsEditable="False" Margin="15,0,0,0">
-                        <ComboBoxItem Content="No Shift"/>
-                        <ComboBoxItem Content="Small"/>
-                        <ComboBoxItem Content="Medium" IsSelected="True"/>
-                        <ComboBoxItem Content="Large"/>
-                        <ComboBoxItem Content="Custom"/>
+                    <ComboBox IsEditable="False" Margin="15,0,0,0"
+                              ItemsSource="{Binding SelectedColorRamp.BrightnessShiftsPresets}"
+                              SelectedItem="{Binding SelectedColorRamp.SelectedBrightnessShiftsPreset}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
             </GroupBox>
