@@ -22,12 +22,18 @@ namespace ColorRampGenerator.Models
                 {
                     Colors.Add(i == middle ? baseColor : baseColor.Clone());
                 }
+                
+                HueShifts.Clear();
+                InitHueShifts(value);
+                
                 RaisePropertyChanged(nameof(Size));
                 RaisePropertyChanged(nameof(Colors));
+                RaisePropertyChanged(nameof(HueShifts));
             }
         }
 
         public ObservableCollection<HsbColor> Colors { get; }
+        public ObservableCollection<int> HueShifts { get; }
 
         public ColorRamp(HsbColor baseColor, int size)
         {
@@ -36,8 +42,31 @@ namespace ColorRampGenerator.Models
             {
                 Colors.Add(baseColor.Clone());
             }
+            
+            HueShifts = new ObservableCollection<int>();
+            InitHueShifts(size);
 
             BaseColor.PropertyChanged += BaseColorOnPropertyChanged;
+        }
+
+        private void InitHueShifts(int size)
+        {
+            var middle = size / 2;
+            for (var i = 0; i < size; i++)
+            {
+                if (i < middle)
+                {
+                    HueShifts.Add(-5);
+                }
+                else if (i == middle)
+                {
+                    HueShifts.Add(0);
+                }
+                else
+                {
+                    HueShifts.Add(5);
+                }
+            }
         }
 
         private void BaseColorOnPropertyChanged(object sender, PropertyChangedEventArgs args)

@@ -10,6 +10,7 @@
         d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=true}">
     <Window.Resources>
         <conv:IntToRadioBoolConverter x:Key="IntToRadioBoolConverter"/>
+        <conv:IntToSignedStringConverter x:Key="IntToSignedStringConverter"/>
     </Window.Resources>
     
     <Grid>
@@ -110,22 +111,31 @@
             <!-- Hue Shift -->
             <GroupBox Header="Hue Shift">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="0" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <ComboBox IsEditable="False" Margin="15,0,0,0">
+                    <ComboBox IsEditable="False" Margin="0,0,15,0">
                         <ComboBoxItem Content="No Shift"/>
                         <ComboBoxItem Content="Small"/>
                         <ComboBoxItem Content="Medium" IsSelected="True"/>
                         <ComboBoxItem Content="Large"/>
                         <ComboBoxItem Content="Custom"/>
                     </ComboBox>
+                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.HueShifts}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="{Binding SelectedColorRamp.HueShifts.Count}" Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Grid.Column" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBox Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"
+                                         Text="{Binding Path=., Converter={StaticResource IntToSignedStringConverter}}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </GroupBox>
             
