@@ -33,7 +33,7 @@ namespace ColorRampGenerator.Models
         }
 
         public ObservableCollection<HsbColor> Colors { get; }
-        public ObservableCollection<int> HueShifts { get; }
+        public ObservableCollection<Shift> HueShifts { get; }
 
         public ColorRamp(HsbColor baseColor, int size)
         {
@@ -43,7 +43,7 @@ namespace ColorRampGenerator.Models
                 Colors.Add(baseColor.Clone());
             }
             
-            HueShifts = new ObservableCollection<int>();
+            HueShifts = new ObservableCollection<Shift>();
             InitHueShifts(size);
 
             BaseColor.PropertyChanged += BaseColorOnPropertyChanged;
