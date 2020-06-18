@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using ColorRampGenerator.Prism;
 
 namespace ColorRampGenerator.Models
@@ -41,6 +42,11 @@ namespace ColorRampGenerator.Models
 
         private void Init(HsbColor baseColor, int size)
         {
+            foreach (var hueShift in HueShifts)
+            {
+                hueShift.PropertyChanged -= OnHueShiftPropertyChange;
+            }
+            
             Colors.Clear();
             HueShifts.Clear();
             
@@ -62,6 +68,8 @@ namespace ColorRampGenerator.Models
                     Colors.Add(baseColor.Clone());
                     HueShifts.Add(15);
                 }
+
+                HueShifts[i].PropertyChanged += OnHueShiftPropertyChange;
             }
         }
 
@@ -83,6 +91,11 @@ namespace ColorRampGenerator.Models
                 totalHueShift += HueShifts[i];
                 Colors[i].Hue = baseColor.Hue + totalHueShift;
             }
+        }
+
+        private void OnHueShiftPropertyChange(object sender, PropertyChangedEventArgs args)
+        {
+            ApplyShifts();
         }
     }
 }
