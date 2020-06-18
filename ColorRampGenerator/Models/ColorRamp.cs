@@ -15,15 +15,8 @@ namespace ColorRampGenerator.Models
                 if(Colors.Count == value) return;
                 
                 var baseColor = BaseColor;
-                Colors.Clear();
-                var middle = value / 2;
-                for (var i = 0; i < value; i++)
-                {
-                    Colors.Add(i == middle ? baseColor : baseColor.Clone());
-                }
-                
-                HueShifts.Clear();
-                InitHueShifts(value);
+                Init(baseColor, value);
+                ApplyShifts();
                 
                 RaisePropertyChanged(nameof(Size));
                 RaisePropertyChanged(nameof(Colors));
@@ -37,32 +30,58 @@ namespace ColorRampGenerator.Models
         public ColorRamp(HsbColor baseColor, int size)
         {
             Colors = new ObservableCollection<HsbColor>();
-            for (var i = 0; i < size; i++)
-            {
-                Colors.Add(baseColor.Clone());
-            }
-            
             HueShifts = new ObservableCollection<Shift>();
-            InitHueShifts(size);
+            
+            Init(baseColor, size);
+            ApplyShifts();
+            
+            BaseColor.PropertyChanged += (o, e)
+                => ApplyShifts();
         }
 
-        private void InitHueShifts(int size)
+        private void Init(HsbColor baseColor, int size)
         {
+            Colors.Clear();
+            HueShifts.Clear();
+            
             var middle = size / 2;
             for (var i = 0; i < size; i++)
             {
                 if (i < middle)
                 {
-                    HueShifts.Add(-5);
+                    Colors.Add(baseColor.Clone());
+                    HueShifts.Add(-15);
                 }
                 else if (i == middle)
                 {
+                    Colors.Add(baseColor);
                     HueShifts.Add(0);
                 }
                 else
                 {
-                    HueShifts.Add(5);
+                    Colors.Add(baseColor.Clone());
+                    HueShifts.Add(15);
                 }
+            }
+        }
+
+        private void ApplyShifts()
+        {
+            var middle = Colors.Count / 2;
+            var baseColor = BaseColor;
+            
+            var totalHueShift = 0;
+            for (var i = middle - 1; i >= 0; i--)
+            {
+                totalHueShift += HueShifts[i];
+                Colors[i].Hue = baseColor.Hue + totalHueShift;
+            }
+
+            totalHueShift = 0;
+            for (var i = middle + 1; i < Colors.Count; i++)
+            {
+                totalHueShift += HueShifts[i];
+                Colors[i].Hue = baseColor.Hue + totalHueShift;
             }
         }
     }

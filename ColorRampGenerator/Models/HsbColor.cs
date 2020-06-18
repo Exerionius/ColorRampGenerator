@@ -12,7 +12,15 @@ namespace ColorRampGenerator.Models
             get => Convert.ToInt32(_hue);
             set
             {
-                _hue = Math.Clamp(value, 0, 360);
+                if (value >= 0)
+                {
+                    _hue = value % 361;
+                }
+                else
+                {
+                    _hue = 360 - value * -1 % 360;
+                }
+                
                 RaisePropertyChanged(nameof(Hue));
                 RaisePropertyChanged(nameof(Brush));
             }

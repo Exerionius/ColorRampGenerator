@@ -25,8 +25,8 @@ namespace ColorRampGenerator.ViewModels
         {
             ColorRamps = new ObservableCollection<ColorRamp>
             {
-                new ColorRamp(_defaultColor, 5),
-                new ColorRamp(_defaultColor, 3)
+                new ColorRamp(_defaultColor.Clone(), 5),
+                new ColorRamp(_defaultColor.Clone(), 3)
             };
             SelectedColorRamp = ColorRamps[0];
         }
