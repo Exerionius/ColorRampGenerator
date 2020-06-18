@@ -173,15 +173,24 @@
             <!-- Brightness Shift -->
             <GroupBox Header="Brightness Shift">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="-5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="0" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
-                    <TextBox Text="+5" Width="25" VerticalContentAlignment="Center" TextAlignment="Center" IsEnabled="False"/>
+                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.BrightnessShifts}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="{Binding SelectedColorRamp.BrightnessShifts.Count}" Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Grid.Column" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
+                                         Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntToSignedStringConverter}}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                     <ComboBox IsEditable="False" Margin="15,0,0,0">
                         <ComboBoxItem Content="No Shift"/>
                         <ComboBoxItem Content="Small"/>
