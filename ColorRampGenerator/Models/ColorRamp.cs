@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using ColorRampGenerator.Prism;
 
 namespace ColorRampGenerator.Models
@@ -45,8 +44,6 @@ namespace ColorRampGenerator.Models
             
             HueShifts = new ObservableCollection<Shift>();
             InitHueShifts(size);
-
-            BaseColor.PropertyChanged += BaseColorOnPropertyChanged;
         }
 
         private void InitHueShifts(int size)
@@ -67,11 +64,6 @@ namespace ColorRampGenerator.Models
                     HueShifts.Add(5);
                 }
             }
-        }
-
-        private void BaseColorOnPropertyChanged(object sender, PropertyChangedEventArgs args)
-        {
-            RaisePropertyChanged(nameof(BaseColor));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using ColorRampGenerator.Models;
 using ColorRampGenerator.Prism;
 
@@ -7,6 +6,8 @@ namespace ColorRampGenerator.ViewModels
 {
     public class MainViewModel: BindableBase
     {
+        private readonly HsbColor _defaultColor = new HsbColor(120, 60, 50);
+        
         public ObservableCollection<ColorRamp> ColorRamps { get; }
 
         public ColorRamp SelectedColorRamp
@@ -14,18 +15,11 @@ namespace ColorRampGenerator.ViewModels
             get => _selectedColorRamp;
             set
             {
-                if (_selectedColorRamp != null)
-                {
-                    _selectedColorRamp.PropertyChanged -= OnBaseColorChange;
-                }
                 _selectedColorRamp = value;
-                _selectedColorRamp.PropertyChanged += OnBaseColorChange;
                 RaisePropertyChanged(nameof(SelectedColorRamp));
             }
         }
         private ColorRamp _selectedColorRamp;
-
-        private readonly HsbColor _defaultColor = new HsbColor(120, 60, 50);
 
         public MainViewModel()
         {
@@ -35,10 +29,6 @@ namespace ColorRampGenerator.ViewModels
                 new ColorRamp(_defaultColor, 3)
             };
             SelectedColorRamp = ColorRamps[0];
-        }
-
-        private void OnBaseColorChange(object sender, PropertyChangedEventArgs args)
-        {
         }
     }
 }
