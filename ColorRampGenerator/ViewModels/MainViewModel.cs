@@ -67,7 +67,7 @@ namespace ColorRampGenerator.ViewModels
         private void AddColorRamp()
         {
             ColorRamps.Add(SelectedColorRamp.Clone());
-            SelectedColorRamp = ColorRamps[^1];
+            SelectedColorRamp = ColorRamps[ColorRamps.Count - 1];
             RaisePropertyChanged(nameof(CanRemoveAnyColorRamps));
         }
 
