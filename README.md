@@ -1,5 +1,5 @@
 ﻿# Color Ramp Generator
-![Platform](https://img.shields.io/badge/platform-win--32%20%7C%20win--64-lightgrey) [![License](https://img.shields.io/badge/license-MIT-brightgreen)](/LICENSE.md)
+![Platform](https://img.shields.io/badge/platform-win--32%20%7C%20win--64-lightgrey) [![Licence](https://img.shields.io/badge/licence-MIT-brightgreen)](/LICENCE.md)
 
 Color Ramp Generator is a nifty tool to make your life easier when you need to make a color ramp out of the base color.
 
@@ -34,4 +34,4 @@ Pull requests are welcome.
 The project uses free [LiveCharts](https://github.com/Live-Charts/Live-Charts/) library for the graph visualization.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](/LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENCE.md](/LICENCE.md) file for details
