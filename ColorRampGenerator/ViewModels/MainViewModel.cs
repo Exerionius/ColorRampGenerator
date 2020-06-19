@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using ColorRampGenerator.Models;
 using ColorRampGenerator.Prism;
 
@@ -27,32 +28,58 @@ namespace ColorRampGenerator.ViewModels
         public DelegateCommand AddColorRampCommand { get; }
         public DelegateCommand<ColorRamp> RemoveColorRampCommand { get; }
 
-        public MainViewModel()
+        public MainViewModel(List<ShiftsPreset> huePresets,
+            List<ShiftsPreset> saturationPresets,
+            List<ShiftsPreset> brightnessPresets)
         {
-            var huePresets = new List<ShiftsPreset>
+            if (huePresets == null)
             {
-                new ShiftsPreset(0, 0, "No Shift"),
-                new ShiftsPreset(-5, 5, "Small"),
-                new ShiftsPreset(-10, 10, "Medium", true),
-                new ShiftsPreset(-20, 20, "Large"),
-                new ShiftsPreset(0, 0, "Custom", custom: true)
-            };
-            var saturationPresets = new List<ShiftsPreset>
+                huePresets = new List<ShiftsPreset>
+                {
+                    new ShiftsPreset(0, 0, "No Shift"),
+                    new ShiftsPreset(-5, 5, "Small"),
+                    new ShiftsPreset(-10, 10, "Medium", true),
+                    new ShiftsPreset(-20, 20, "Large"),
+                    new ShiftsPreset(0, 0, "Custom", custom: true)
+                };
+            }
+            if (huePresets.First(p => p.Custom) == null)
             {
-                new ShiftsPreset(0, 0, "No Shift"),
-                new ShiftsPreset(5, -10, "Desaturated Shadows"),
-                new ShiftsPreset(-10, 5, "Desaturated Highlights"),
-                new ShiftsPreset(-10, -10, "Desaturated Both", true),
-                new ShiftsPreset(0, 0, "Custom", custom: true)
-            };
-            var brightnessPresets = new List<ShiftsPreset>
+                huePresets.Add(new ShiftsPreset(0, 0, "Custom", custom: true));
+            }
+
+            if (saturationPresets == null)
             {
-                new ShiftsPreset(0, 0, "No Shift"),
-                new ShiftsPreset(5, -5, "Small"),
-                new ShiftsPreset(10, -10, "Medium", true),
-                new ShiftsPreset(20, -20, "Large"),
-                new ShiftsPreset(0, 0, "Custom", custom: true)
-            };
+                saturationPresets = new List<ShiftsPreset>
+                {
+                    new ShiftsPreset(0, 0, "No Shift"),
+                    new ShiftsPreset(5, -10, "Desaturated Shadows"),
+                    new ShiftsPreset(-10, 5, "Desaturated Highlights"),
+                    new ShiftsPreset(-10, -10, "Desaturated Both", true),
+                    new ShiftsPreset(0, 0, "Custom", custom: true)
+                };
+            }
+            if (saturationPresets.First(p => p.Custom) == null)
+            {
+                saturationPresets.Add(new ShiftsPreset(0, 0, "Custom", custom: true));
+            }
+
+            if (brightnessPresets == null)
+            {
+                brightnessPresets = new List<ShiftsPreset>
+                {
+                    new ShiftsPreset(0, 0, "No Shift"),
+                    new ShiftsPreset(5, -5, "Small"),
+                    new ShiftsPreset(10, -10, "Medium", true),
+                    new ShiftsPreset(20, -20, "Large"),
+                    new ShiftsPreset(0, 0, "Custom", custom: true)
+                };
+            }
+            if (brightnessPresets.First(p => p.Custom) == null)
+            {
+                brightnessPresets.Add(new ShiftsPreset(0, 0, "Custom", custom: true));
+            }
+            
             ColorRamps = new ObservableCollection<ColorRamp>
             {
                 new ColorRamp(_defaultColor.Clone(), 5, huePresets, saturationPresets, brightnessPresets)
