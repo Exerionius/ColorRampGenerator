@@ -6,7 +6,8 @@ Color Ramp Generator is a nifty tool to make your life easier when you need to m
 ![Screenshot](/screenshot.png?raw=true)
 
 ## Installation
-Just grab the latest release, unzip to a folder and run ColorRampGenerator.exe
+Color Ramp Generator requires the [.NET Framework 4.8 Runtime](https://dotnet.microsoft.com/download/dotnet-framework/net48) being installed on your system.  
+To use the program just grab the zip file from the latest [release](https://github.com/Exerionius/ColorRampGenerator/releases), unzip it to a folder and run ColorRampGenerator.exe
 
 ## Usage
 
