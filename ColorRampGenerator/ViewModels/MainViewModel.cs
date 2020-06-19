@@ -40,8 +40,8 @@ namespace ColorRampGenerator.ViewModels
             var saturationPresets = new List<ShiftsPreset>
             {
                 new ShiftsPreset(0, 0, "No Shift"),
-                new ShiftsPreset(-10, 10, "Desaturated Shadows"),
-                new ShiftsPreset(10, -10, "Desaturated Highlights"),
+                new ShiftsPreset(5, -10, "Desaturated Shadows"),
+                new ShiftsPreset(-10, 5, "Desaturated Highlights"),
                 new ShiftsPreset(-10, -10, "Desaturated Both", true),
                 new ShiftsPreset(0, 0, "Custom", custom: true)
             };
