@@ -48,9 +48,9 @@ namespace ColorRampGenerator.ViewModels
             var brightnessPresets = new List<ShiftsPreset>
             {
                 new ShiftsPreset(0, 0, "No Shift"),
-                new ShiftsPreset(-5, 5, "Small"),
-                new ShiftsPreset(-10, 10, "Medium", true),
-                new ShiftsPreset(-20, 20, "Large"),
+                new ShiftsPreset(5, -5, "Small"),
+                new ShiftsPreset(10, -10, "Medium", true),
+                new ShiftsPreset(20, -20, "Large"),
                 new ShiftsPreset(0, 0, "Custom", custom: true)
             };
             ColorRamps = new ObservableCollection<ColorRamp>
@@ -67,7 +67,7 @@ namespace ColorRampGenerator.ViewModels
         private void AddColorRamp()
         {
             ColorRamps.Add(SelectedColorRamp.Clone());
-            SelectedColorRamp = ColorRamps[^1];
+            SelectedColorRamp = ColorRamps[ColorRamps.Count - 1];
             RaisePropertyChanged(nameof(CanRemoveAnyColorRamps));
         }
 
