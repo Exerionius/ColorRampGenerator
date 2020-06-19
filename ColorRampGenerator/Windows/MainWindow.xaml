@@ -7,7 +7,7 @@
         xmlns:conv="clr-namespace:ColorRampGenerator.Converters"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="Color Ramp Generator" Height="450" Width="810" MinHeight="450" MinWidth="810"
+        Title="Color Ramp Generator" Height="800" Width="810" MinHeight="800" MinWidth="810"
         d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=true}">
     <Window.Resources>
         <conv:IntToRadioBoolConverter x:Key="IntToRadioBoolConverter"/>
@@ -213,10 +213,23 @@
                 </StackPanel>
             </GroupBox>
             
-            <!-- Plot -->
-            <Border DockPanel.Dock="Top" BorderThickness="2" BorderBrush="Black" Margin="0,15,0,0">
-                <lvc:CartesianChart />
-            </Border>
+            <!-- Chart -->
+            <lvc:CartesianChart DockPanel.Dock="Top" Name="Chart" Series="{Binding SelectedColorRamp.SeriesCollection, Mode=OneWay}">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis MinValue="0" MaxValue="360" Title="Hue">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator IsEnabled="True" Step="72"/>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis MinValue="0" MaxValue="100" Title="Brightness" Position="RightTop">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator IsEnabled="True" Step="20"/>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>  
+            </lvc:CartesianChart>
             
         </DockPanel>
         

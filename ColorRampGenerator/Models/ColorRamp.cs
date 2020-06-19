@@ -2,7 +2,12 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Media;
 using ColorRampGenerator.Prism;
+using ColorRampGenerator.Tools;
+using LiveCharts;
+using LiveCharts.Configurations;
+using LiveCharts.Wpf;
 
 namespace ColorRampGenerator.Models
 {
@@ -29,7 +34,7 @@ namespace ColorRampGenerator.Models
             }
         }
 
-        public ObservableCollection<HsbColor> Colors { get; }
+        public ChartValues<HsbColor> Colors { get; }
         public ObservableCollection<Shift> HueShifts { get; }
         public ObservableCollection<Shift> SaturationShifts { get; }
         public ObservableCollection<Shift> BrightnessShifts { get; }
@@ -96,11 +101,13 @@ namespace ColorRampGenerator.Models
             }
         }
         private ShiftsPreset _selectedBrightnessShiftsPreset;
+        
+        public SeriesCollection SeriesCollection { get; }
 
         public ColorRamp(HsbColor baseColor, int size, IEnumerable<ShiftsPreset> huePresets,
             IEnumerable<ShiftsPreset> saturationPresets, IEnumerable<ShiftsPreset> brightnessPresets)
         {
-            Colors = new ObservableCollection<HsbColor>();
+            Colors = new ChartValues<HsbColor>();
             HueShifts = new ObservableCollection<Shift>();
             SaturationShifts = new ObservableCollection<Shift>();
             BrightnessShifts = new ObservableCollection<Shift>();
@@ -119,6 +126,23 @@ namespace ColorRampGenerator.Models
             
             Init(baseColor, size);
             ApplyShifts();
+            
+            var mapper = Mappers.Xy<HsbColor>()
+                .X(v => v.Hue)
+                .Y(v => v.Brightness)
+                .Fill((v, _) => new SolidColorBrush(ColorHelper.GetRgb(v)));
+            
+            SeriesCollection = new SeriesCollection(mapper)
+            {
+                new ScatterSeries
+                {
+                    Title = string.Empty,
+                    Values = Colors,
+                    LabelPoint = p => $"Hue: {p.X}, Brightness: {p.Y}",
+                    PointGeometry = DefaultGeometries.Diamond,
+                    MaxPointShapeDiameter = 15
+                }
+            };
             
             BaseColor.PropertyChanged += (o, e)
                 => ApplyShifts();
