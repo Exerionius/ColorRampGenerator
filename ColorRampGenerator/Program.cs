@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using ColorRampGenerator.Tools;
 using ColorRampGenerator.ViewModels;
 using ColorRampGenerator.Windows;
 
@@ -11,7 +12,8 @@ namespace ColorRampGenerator
         [STAThread]
         public static void Main()
         {
-            var viewModel = new MainViewModel();
+            var config = PresetLoader.GetConfig();
+            var viewModel = new MainViewModel(config?.HuePresets, config?.SaturationPresets, config?.BrightnessPresets);
             var window = new MainWindow(viewModel);
 
             try
