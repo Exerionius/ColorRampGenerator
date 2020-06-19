@@ -92,11 +92,14 @@
                             Value="{Binding SelectedColorRamp.BaseColor.Brightness}"/>
                     
                     <TextBox Grid.Column="2" Grid.Row="0" TextAlignment="Center" VerticalContentAlignment="Center"
-                             Text="{Binding SelectedColorRamp.BaseColor.Hue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedColorRamp.BaseColor.Hue, Mode=TwoWay}"
+                             KeyUp="TextBox_KeyEnterUpdate"/>
                     <TextBox Grid.Column="2" Grid.Row="1" TextAlignment="Center" VerticalContentAlignment="Center"
-                             Text="{Binding SelectedColorRamp.BaseColor.Saturation}"/>
+                             Text="{Binding SelectedColorRamp.BaseColor.Saturation, Mode=TwoWay}"
+                             KeyUp="TextBox_KeyEnterUpdate"/>
                     <TextBox Grid.Column="2" Grid.Row="2" TextAlignment="Center" VerticalContentAlignment="Center"
-                             Text="{Binding SelectedColorRamp.BaseColor.Brightness}"/>
+                             Text="{Binding SelectedColorRamp.BaseColor.Brightness, Mode=TwoWay}"
+                             KeyUp="TextBox_KeyEnterUpdate"/>
                     
                     <Label Grid.Column="3" Grid.Row="0" Content="Hue" VerticalAlignment="Center"/>
                     <Label Grid.Column="3" Grid.Row="1" Content="Saturation" VerticalAlignment="Center"/>
@@ -131,7 +134,8 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
-                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"/>
+                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"
+                                         KeyUp="TextBox_KeyEnterUpdate"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -164,7 +168,8 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
-                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"/>
+                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"
+                                         KeyUp="TextBox_KeyEnterUpdate"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -197,7 +202,8 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
-                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"/>
+                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"
+                                         KeyUp="TextBox_KeyEnterUpdate"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
