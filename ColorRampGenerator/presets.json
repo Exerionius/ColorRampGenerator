@@ -61,7 +61,7 @@
     {
       "Name": "Desaturated Both",
       "LeftShift": -10,
-      "RightShift": 10,
+      "RightShift": -10,
       "DefaultSelected": true,
       "Custom": false
     },
