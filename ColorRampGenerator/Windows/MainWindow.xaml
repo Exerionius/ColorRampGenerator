@@ -126,9 +126,9 @@
                         <RadioButton Content="Linear" IsChecked="{Binding SelectedColorRamp.CustomHueShifts, Converter={StaticResource BoolInverterConverter}}"/>
                         <RadioButton Content="Custom" IsChecked="{Binding SelectedColorRamp.CustomHueShifts}" Margin="10,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel.Style>
-                            <Style TargetType="StackPanel">
+                    <DockPanel>
+                        <DockPanel.Style>
+                            <Style TargetType="DockPanel">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding SelectedColorRamp.CustomHueShifts}" Value="False">
@@ -136,13 +136,8 @@
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </StackPanel.Style>
-                        <Slider Width="300" Minimum="-40" Maximum="40" Margin="5" VerticalAlignment="Center"
-                                AutoToolTipPlacement="TopLeft"
-                                AutoToolTipPrecision="0"
-                                ToolTip="{Binding SelectedColorRamp.GeneralHueShift.Value}"
-                                Value="{Binding SelectedColorRamp.GeneralHueShift.Value}"/>
-                        <StackPanel Orientation="Vertical">
+                        </DockPanel.Style>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
                             <RadioButton Content="Same direction"
                                          IsChecked="{Binding SelectedColorRamp.GeneralHueShiftMode, Mode=TwoWay,
                                          Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=SameDirection}"/>
@@ -150,7 +145,12 @@
                                          IsChecked="{Binding SelectedColorRamp.GeneralHueShiftMode, Mode=TwoWay,
                                          Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=OppositeDirections}"/>
                         </StackPanel>
-                    </StackPanel>
+                        <Slider DockPanel.Dock="Left" Minimum="-40" Maximum="40" Margin="5" VerticalAlignment="Stretch"
+                                AutoToolTipPlacement="TopLeft"
+                                AutoToolTipPrecision="0"
+                                ToolTip="{Binding SelectedColorRamp.GeneralHueShift.Value}"
+                                Value="{Binding SelectedColorRamp.GeneralHueShift.Value}"/>
+                    </DockPanel>
                     <StackPanel Orientation="Horizontal" MinHeight="30">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
@@ -192,9 +192,9 @@
                         <RadioButton Content="Linear" IsChecked="{Binding SelectedColorRamp.CustomSaturationShifts, Converter={StaticResource BoolInverterConverter}}"/>
                         <RadioButton Content="Custom" IsChecked="{Binding SelectedColorRamp.CustomSaturationShifts}" Margin="10,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel.Style>
-                            <Style TargetType="StackPanel">
+                    <DockPanel>
+                        <DockPanel.Style>
+                            <Style TargetType="DockPanel">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding SelectedColorRamp.CustomSaturationShifts}" Value="False">
@@ -202,13 +202,8 @@
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </StackPanel.Style>
-                        <Slider Width="300" Minimum="-40" Maximum="40" Margin="5" VerticalAlignment="Center"
-                                AutoToolTipPlacement="TopLeft"
-                                AutoToolTipPrecision="0"
-                                ToolTip="{Binding SelectedColorRamp.GeneralSaturationShift.Value}"
-                                Value="{Binding SelectedColorRamp.GeneralSaturationShift.Value}"/>
-                        <StackPanel Orientation="Vertical">
+                        </DockPanel.Style>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
                             <RadioButton Content="Same direction"
                                          IsChecked="{Binding SelectedColorRamp.GeneralSaturationShiftMode, Mode=TwoWay,
                                          Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=SameDirection}"/>
@@ -216,7 +211,12 @@
                                          IsChecked="{Binding SelectedColorRamp.GeneralSaturationShiftMode, Mode=TwoWay,
                                          Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=OppositeDirections}"/>
                         </StackPanel>
-                    </StackPanel>
+                        <Slider DockPanel.Dock="Left" Minimum="-40" Maximum="40" Margin="5" VerticalAlignment="Stretch"
+                                AutoToolTipPlacement="TopLeft"
+                                AutoToolTipPrecision="0"
+                                ToolTip="{Binding SelectedColorRamp.GeneralSaturationShift.Value}"
+                                Value="{Binding SelectedColorRamp.GeneralSaturationShift.Value}"/>
+                    </DockPanel>
                     <StackPanel Orientation="Horizontal" MinHeight="30">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
@@ -258,9 +258,9 @@
                         <RadioButton Content="Linear" IsChecked="{Binding SelectedColorRamp.CustomBrightnessShifts, Converter={StaticResource BoolInverterConverter}}"/>
                         <RadioButton Content="Custom" IsChecked="{Binding SelectedColorRamp.CustomBrightnessShifts}" Margin="10,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel.Style>
-                            <Style TargetType="StackPanel">
+                    <DockPanel>
+                        <DockPanel.Style>
+                            <Style TargetType="DockPanel">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding SelectedColorRamp.CustomBrightnessShifts}" Value="False">
@@ -268,13 +268,8 @@
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </StackPanel.Style>
-                        <Slider Width="300" Minimum="-40" Maximum="40" Margin="5" VerticalAlignment="Center"
-                                AutoToolTipPlacement="TopLeft"
-                                AutoToolTipPrecision="0"
-                                ToolTip="{Binding SelectedColorRamp.GeneralBrightnessShift.Value}"
-                                Value="{Binding SelectedColorRamp.GeneralBrightnessShift.Value}"/>
-                        <StackPanel Orientation="Vertical">
+                        </DockPanel.Style>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
                             <RadioButton Content="Same direction"
                                          IsChecked="{Binding SelectedColorRamp.GeneralBrightnessShiftMode, Mode=TwoWay,
                                          Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=SameDirection}"/>
@@ -282,7 +277,12 @@
                                          IsChecked="{Binding SelectedColorRamp.GeneralBrightnessShiftMode, Mode=TwoWay,
                                          Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=OppositeDirections}"/>
                         </StackPanel>
-                    </StackPanel>
+                        <Slider DockPanel.Dock="Left" Minimum="-40" Maximum="40" Margin="5" VerticalAlignment="Center"
+                                AutoToolTipPlacement="TopLeft"
+                                AutoToolTipPrecision="0"
+                                ToolTip="{Binding SelectedColorRamp.GeneralBrightnessShift.Value}"
+                                Value="{Binding SelectedColorRamp.GeneralBrightnessShift.Value}"/>
+                    </DockPanel>
                     <StackPanel Orientation="Horizontal" MinHeight="30">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
