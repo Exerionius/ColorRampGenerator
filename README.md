@@ -14,9 +14,9 @@ To use the program just grab the zip file from the latest [release](https://gith
 ### Getting Started
 1. Use Hue, Saturation and Brightness sliders to make a base color of your liking. For the base color I recommend setting Brightness to 50 and Saturation between 50 and 70.
 2. Choose your ramp size.
-3. Chose Hue shifts. You can use presets from the drop-down to the right or use your custom values.
-4. Chose Saturation shifts the same way you did with Hue.
-5. Chose Brightness shifts the same way you did with Hue and Saturation.
+3. Use Hue Shift slider to adjust colors in the ramp. You can choose whether shifts will have the same direction on both sides to the left and to the right of the base color, or they will have opposite directions.
+4. Use Hue Shift slider to adjust colors in the ramp the same way you did with Hue.
+5. Use Hue Shift slider to adjust colors in the ramp the same way you did with Hue and Saturation.
 6. Congratulations! You have made your first color ramp.
 
 ### Where to go from here
@@ -24,14 +24,16 @@ To use the program just grab the zip file from the latest [release](https://gith
 * Play with custom shifts, see how it looks in the graph.
 * Take a screenshot and use it to pick a colors in the graphic software of your choice.
 
-### What if I want my own shift presets?
-You can find the presets.json file in the folder next to the executable file. Feel free to edit it the way you like, just follow the format.
-
 ## Contributing
 Pull requests are welcome.
 
 ## Acknowledgment
 The project uses free [LiveCharts](https://github.com/Live-Charts/Live-Charts/) library for the graph visualization.
+
+Sources of inspiration:
+* AdamCYonis' [video](https://www.youtube.com/watch?v=hkrK65FPmDI) about color palettes
+* Slynyrd's [article](https://www.slynyrd.com/blog/2018/1/10/pixelblog-1-color-palettes) about color palettes
+* [This](http://pixeljoint.com/forum/forum_posts.asp?TID=10695) PixelJoint forum thread 
 
 ## License
 This project is licensed under the MIT License - see the [LICENCE.md](/LICENCE.md) file for details
