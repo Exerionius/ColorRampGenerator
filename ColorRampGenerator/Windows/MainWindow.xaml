@@ -12,6 +12,8 @@
     <Window.Resources>
         <conv:IntToRadioBoolConverter x:Key="IntToRadioBoolConverter"/>
         <conv:IntToSignedStringConverter x:Key="IntToSignedStringConverter"/>
+        <conv:EnumToRadioBoolConverter x:Key="EnumToRadioBoolConverter"/>
+        <conv:BoolInverterConverter x:Key="BoolInverterConverter"/>
     </Window.Resources>
     
     <Grid>
@@ -119,103 +121,199 @@
             
             <!-- Hue Shift -->
             <GroupBox Header="Hue Shift" DockPanel.Dock="Top">
-                <StackPanel Orientation="Horizontal">
-                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.HueShifts}" IsEnabled="{Binding SelectedColorRamp.SelectedHueShiftsPreset.Custom}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="{Binding SelectedColorRamp.HueShifts.Count}" Rows="1"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="Grid.Column" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"/>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Linear" IsChecked="{Binding SelectedColorRamp.CustomHueShifts, Converter={StaticResource BoolInverterConverter}}"/>
+                        <RadioButton Content="Custom" IsChecked="{Binding SelectedColorRamp.CustomHueShifts}" Margin="10,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedColorRamp.CustomHueShifts}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
                             </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
-                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"
-                                         KeyUp="TextBox_KeyEnterUpdate"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <ComboBox IsEditable="False" Margin="15,0,0,0"
-                              ItemsSource="{Binding SelectedColorRamp.HueShiftsPresets}"
-                              SelectedItem="{Binding SelectedColorRamp.SelectedHueShiftsPreset}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding Name}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                        </StackPanel.Style>
+                        <Slider Width="300" Minimum="-40" Maximum="40" Margin="5" VerticalAlignment="Center"
+                                AutoToolTipPlacement="TopLeft"
+                                AutoToolTipPrecision="0"
+                                ToolTip="{Binding SelectedColorRamp.GeneralHueShift.Value}"
+                                Value="{Binding SelectedColorRamp.GeneralHueShift.Value}"/>
+                        <StackPanel Orientation="Vertical">
+                            <RadioButton Content="Same direction"
+                                         IsChecked="{Binding SelectedColorRamp.GeneralHueShiftMode, Mode=TwoWay,
+                                         Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=SameDirection}"/>
+                            <RadioButton Content="Opposite directions"
+                                         IsChecked="{Binding SelectedColorRamp.GeneralHueShiftMode, Mode=TwoWay,
+                                         Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=OppositeDirections}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" MinHeight="30">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedColorRamp.CustomHueShifts}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.HueShifts}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="{Binding SelectedColorRamp.HueShifts.Count}" Rows="1"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="Grid.Column" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
+                                             Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"
+                                             KeyUp="TextBox_KeyEnterUpdate"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
             
             <!-- Saturation Shift -->
             <GroupBox Header="Saturation Shift" DockPanel.Dock="Top">
-                <StackPanel Orientation="Horizontal">
-                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.SaturationShifts}" IsEnabled="{Binding SelectedColorRamp.SelectedSaturationShiftsPreset.Custom}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="{Binding SelectedColorRamp.SaturationShifts.Count}" Rows="1"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="Grid.Column" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"/>
+               <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Linear" IsChecked="{Binding SelectedColorRamp.CustomSaturationShifts, Converter={StaticResource BoolInverterConverter}}"/>
+                        <RadioButton Content="Custom" IsChecked="{Binding SelectedColorRamp.CustomSaturationShifts}" Margin="10,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedColorRamp.CustomSaturationShifts}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
                             </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
-                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"
-                                         KeyUp="TextBox_KeyEnterUpdate"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <ComboBox IsEditable="False" Margin="15,0,0,0"
-                              ItemsSource="{Binding SelectedColorRamp.SaturationShiftsPresets}"
-                              SelectedItem="{Binding SelectedColorRamp.SelectedSaturationShiftsPreset}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding Name}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                        </StackPanel.Style>
+                        <Slider Width="300" Minimum="-40" Maximum="40" Margin="5" VerticalAlignment="Center"
+                                AutoToolTipPlacement="TopLeft"
+                                AutoToolTipPrecision="0"
+                                ToolTip="{Binding SelectedColorRamp.GeneralSaturationShift.Value}"
+                                Value="{Binding SelectedColorRamp.GeneralSaturationShift.Value}"/>
+                        <StackPanel Orientation="Vertical">
+                            <RadioButton Content="Same direction"
+                                         IsChecked="{Binding SelectedColorRamp.GeneralSaturationShiftMode, Mode=TwoWay,
+                                         Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=SameDirection}"/>
+                            <RadioButton Content="Opposite directions"
+                                         IsChecked="{Binding SelectedColorRamp.GeneralSaturationShiftMode, Mode=TwoWay,
+                                         Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=OppositeDirections}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" MinHeight="30">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedColorRamp.CustomSaturationShifts}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.SaturationShifts}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="{Binding SelectedColorRamp.SaturationShifts.Count}" Rows="1"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="Grid.Column" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
+                                             Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"
+                                             KeyUp="TextBox_KeyEnterUpdate"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
             
             <!-- Brightness Shift -->
             <GroupBox Header="Brightness Shift" DockPanel.Dock="Top">
-                <StackPanel Orientation="Horizontal">
-                    <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.BrightnessShifts}" IsEnabled="{Binding SelectedColorRamp.SelectedBrightnessShiftsPreset.Custom}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="{Binding SelectedColorRamp.BrightnessShifts.Count}" Rows="1"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="Grid.Column" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"/>
+               <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Linear" IsChecked="{Binding SelectedColorRamp.CustomBrightnessShifts, Converter={StaticResource BoolInverterConverter}}"/>
+                        <RadioButton Content="Custom" IsChecked="{Binding SelectedColorRamp.CustomBrightnessShifts}" Margin="10,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedColorRamp.CustomBrightnessShifts}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
                             </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
-                                         Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"
-                                         KeyUp="TextBox_KeyEnterUpdate"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <ComboBox IsEditable="False" Margin="15,0,0,0"
-                              ItemsSource="{Binding SelectedColorRamp.BrightnessShiftsPresets}"
-                              SelectedItem="{Binding SelectedColorRamp.SelectedBrightnessShiftsPreset}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding Name}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                        </StackPanel.Style>
+                        <Slider Width="300" Minimum="-40" Maximum="40" Margin="5" VerticalAlignment="Center"
+                                AutoToolTipPlacement="TopLeft"
+                                AutoToolTipPrecision="0"
+                                ToolTip="{Binding SelectedColorRamp.GeneralBrightnessShift.Value}"
+                                Value="{Binding SelectedColorRamp.GeneralBrightnessShift.Value}"/>
+                        <StackPanel Orientation="Vertical">
+                            <RadioButton Content="Same direction"
+                                         IsChecked="{Binding SelectedColorRamp.GeneralBrightnessShiftMode, Mode=TwoWay,
+                                         Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=SameDirection}"/>
+                            <RadioButton Content="Opposite directions"
+                                         IsChecked="{Binding SelectedColorRamp.GeneralBrightnessShiftMode, Mode=TwoWay,
+                                         Converter={StaticResource EnumToRadioBoolConverter}, ConverterParameter=OppositeDirections}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" MinHeight="30">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedColorRamp.CustomBrightnessShifts}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <ItemsControl AlternationCount="100" ItemsSource="{Binding SelectedColorRamp.BrightnessShifts}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="{Binding SelectedColorRamp.BrightnessShifts.Count}" Rows="1"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="Grid.Column" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBox Width="35" VerticalContentAlignment="Center" TextAlignment="Center"
+                                             Text="{Binding Value, Converter={StaticResource IntToSignedStringConverter}}"
+                                             KeyUp="TextBox_KeyEnterUpdate"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
             

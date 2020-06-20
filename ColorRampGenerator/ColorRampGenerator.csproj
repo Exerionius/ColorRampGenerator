@@ -62,13 +62,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\BoolInverterConverter.cs" />
+    <Compile Include="Converters\EnumToRadioBoolConverter.cs" />
     <Compile Include="Converters\IntToRadioBoolConverter.cs" />
     <Compile Include="Converters\IntToSignedStringConverter.cs" />
     <Compile Include="Models\ColorRamp.cs" />
     <Compile Include="Models\HsbColor.cs" />
-    <Compile Include="Models\PresetConfig.cs" />
     <Compile Include="Models\Shift.cs" />
-    <Compile Include="Models\ShiftsPreset.cs" />
     <Compile Include="Prism\BindableBase.cs" />
     <Compile Include="Prism\DelegateCommand.cs" />
     <Compile Include="Prism\DelegateCommandBase.cs" />
@@ -86,7 +86,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Tools\ColorHelper.cs" />
-    <Compile Include="Tools\PresetLoader.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -101,11 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="presets.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

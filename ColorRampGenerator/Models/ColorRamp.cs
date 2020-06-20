@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Media;
 using ColorRampGenerator.Prism;
 using ColorRampGenerator.Tools;
@@ -13,7 +11,15 @@ namespace ColorRampGenerator.Models
 {
     public class ColorRamp: BindableBase
     {
+        public enum ShiftMode
+        {
+            SameDirection,
+            OppositeDirections
+        }
+        
         public HsbColor BaseColor => Colors[Colors.Count / 2];
+        public ChartValues<HsbColor> Colors { get; }
+        public SeriesCollection SeriesCollection { get; }
 
         public int Size
         {
@@ -34,97 +40,128 @@ namespace ColorRampGenerator.Models
             }
         }
 
-        public ChartValues<HsbColor> Colors { get; }
+        #region Hue Shifts 
         public ObservableCollection<Shift> HueShifts { get; }
+        public Shift GeneralHueShift { get; }
+        public ShiftMode GeneralHueShiftMode
+        {
+            get => _generalHueShiftMode;
+            set
+            {
+                _generalHueShiftMode = value;
+                RaisePropertyChanged(nameof(GeneralHueShiftMode));
+                SetHueShifts(GeneralHueShift.Value);
+            }
+        }
+        private ShiftMode _generalHueShiftMode;
+        public bool CustomHueShifts
+        {
+            get => _customHueShifts;
+            set
+            {
+                _customHueShifts = value;
+                RaisePropertyChanged(nameof(CustomHueShifts));
+                if (!value)
+                {
+                    SetHueShifts(GeneralHueShift.Value);
+                }
+            }
+        }
+        private bool _customHueShifts;
+        #endregion
+        
+        #region Saturation Shifts
         public ObservableCollection<Shift> SaturationShifts { get; }
-        public ObservableCollection<Shift> BrightnessShifts { get; }
-        
-        public ObservableCollection<ShiftsPreset> HueShiftsPresets { get; }
-        public ShiftsPreset SelectedHueShiftsPreset
+        public Shift GeneralSaturationShift { get; }
+        public ShiftMode GeneralSaturationShiftMode
         {
-            get => _selectedHueShiftsPreset;
+            get => _generalSaturationShiftMode;
             set
             {
-                _selectedHueShiftsPreset = value;
-                
-                var baseColor = BaseColor;
-                Init(baseColor, Colors.Count);
-                ApplyShifts();
-                
-                RaisePropertyChanged(nameof(SelectedHueShiftsPreset));
-                RaisePropertyChanged(nameof(Colors));
-                RaisePropertyChanged(nameof(HueShifts));
-                RaisePropertyChanged(nameof(SaturationShifts));
-                RaisePropertyChanged(nameof(BrightnessShifts));
+                _generalSaturationShiftMode = value;
+                RaisePropertyChanged(nameof(GeneralSaturationShiftMode));
+                SetSaturationShifts(GeneralSaturationShift.Value);
             }
         }
-        private ShiftsPreset _selectedHueShiftsPreset;
-        
-        public ObservableCollection<ShiftsPreset> SaturationShiftsPresets { get; }
-        public ShiftsPreset SelectedSaturationShiftsPreset
+        private ShiftMode _generalSaturationShiftMode;
+        public bool CustomSaturationShifts
         {
-            get => _selectedSaturationShiftsPreset;
+            get => _customSaturationShifts;
             set
             {
-                _selectedSaturationShiftsPreset = value;
-                
-                var baseColor = BaseColor;
-                Init(baseColor, Colors.Count);
-                ApplyShifts();
-                
-                RaisePropertyChanged(nameof(SelectedSaturationShiftsPreset));
-                RaisePropertyChanged(nameof(Colors));
-                RaisePropertyChanged(nameof(HueShifts));
-                RaisePropertyChanged(nameof(SaturationShifts));
-                RaisePropertyChanged(nameof(BrightnessShifts));
+                _customSaturationShifts = value;
+                RaisePropertyChanged(nameof(CustomSaturationShifts));
+                if (!value)
+                {
+                    SetSaturationShifts(GeneralSaturationShift.Value);
+                }
             }
         }
-        private ShiftsPreset _selectedSaturationShiftsPreset;
-        
-        public ObservableCollection<ShiftsPreset> BrightnessShiftsPresets { get; }
-        public ShiftsPreset SelectedBrightnessShiftsPreset
-        {
-            get => _selectedBrightnessShiftsPreset;
-            set
-            {
-                _selectedBrightnessShiftsPreset = value;
-                
-                var baseColor = BaseColor;
-                Init(baseColor, Colors.Count);
-                ApplyShifts();
-                
-                RaisePropertyChanged(nameof(SelectedBrightnessShiftsPreset));
-                RaisePropertyChanged(nameof(Colors));
-                RaisePropertyChanged(nameof(HueShifts));
-                RaisePropertyChanged(nameof(SaturationShifts));
-                RaisePropertyChanged(nameof(BrightnessShifts));
-            }
-        }
-        private ShiftsPreset _selectedBrightnessShiftsPreset;
-        
-        public SeriesCollection SeriesCollection { get; }
+        private bool _customSaturationShifts;
+        #endregion
 
-        public ColorRamp(HsbColor baseColor, int size, IEnumerable<ShiftsPreset> huePresets,
-            IEnumerable<ShiftsPreset> saturationPresets, IEnumerable<ShiftsPreset> brightnessPresets)
+        #region Brightness Shifts
+        public ObservableCollection<Shift> BrightnessShifts { get; }
+        public Shift GeneralBrightnessShift { get; }
+
+        public ShiftMode GeneralBrightnessShiftMode
+        {
+            get => _generalBrightnessShiftMode;
+            set
+            {
+                _generalBrightnessShiftMode = value;
+                RaisePropertyChanged(nameof(GeneralBrightnessShiftMode));
+                SetBrightnessShifts(GeneralBrightnessShift.Value);
+            }
+        }
+        private ShiftMode _generalBrightnessShiftMode;
+        public bool CustomBrightnessShifts
+        {
+            get => _customBrightnessShifts;
+            set
+            {
+                _customBrightnessShifts = value;
+                RaisePropertyChanged(nameof(CustomBrightnessShifts));
+                if (!value)
+                {
+                    SetBrightnessShifts(GeneralBrightnessShift.Value);
+                }
+            }
+        }
+        private bool _customBrightnessShifts;
+        #endregion
+        
+
+        public ColorRamp(HsbColor baseColor, int size,
+            int generalHueShift, int generalSaturationShift, int generalBrightnessShift)
         {
             Colors = new ChartValues<HsbColor>();
             HueShifts = new ObservableCollection<Shift>();
             SaturationShifts = new ObservableCollection<Shift>();
             BrightnessShifts = new ObservableCollection<Shift>();
+
+            GeneralHueShift = generalHueShift;
+            GeneralHueShift.PropertyChanged += (sender, args) =>
+            {
+                SetHueShifts(GeneralHueShift.Value);
+            };
+            GeneralHueShiftMode = ShiftMode.SameDirection;
             
-            HueShiftsPresets = new ObservableCollection<ShiftsPreset>(huePresets);
-            _selectedHueShiftsPreset = HueShiftsPresets.First(p => p.DefaultSelected)
-                                       ?? HueShiftsPresets[0];
+            GeneralSaturationShift = generalSaturationShift;
+            GeneralSaturationShift.PropertyChanged += (sender, args) =>
+            {
+                SetSaturationShifts(GeneralSaturationShift.Value);
+            };
+            GeneralSaturationShiftMode = ShiftMode.OppositeDirections;
             
-            SaturationShiftsPresets = new ObservableCollection<ShiftsPreset>(saturationPresets);
-            _selectedSaturationShiftsPreset = SaturationShiftsPresets.First(p => p.DefaultSelected)
-                                              ?? SaturationShiftsPresets[0];
-            
-            BrightnessShiftsPresets = new ObservableCollection<ShiftsPreset>(brightnessPresets);
-            _selectedBrightnessShiftsPreset = BrightnessShiftsPresets.First(p => p.DefaultSelected)
-                                              ?? BrightnessShiftsPresets[0];
-            
-            Init(baseColor, size);
+            GeneralBrightnessShift = generalBrightnessShift;
+            GeneralBrightnessShift.PropertyChanged += (sender, args) =>
+            {
+                SetBrightnessShifts(GeneralBrightnessShift.Value);
+            };
+            GeneralBrightnessShiftMode = ShiftMode.SameDirection;
+
+             Init(baseColor, size);
             ApplyShifts();
             
             var mapper = Mappers.Xy<HsbColor>()
@@ -151,9 +188,12 @@ namespace ColorRampGenerator.Models
         public ColorRamp Clone()
         {
             return new ColorRamp(BaseColor.Clone(), Colors.Count,
-                HueShiftsPresets.Select(p => p.Clone()),
-                SaturationShiftsPresets.Select(p => p.Clone()),
-                BrightnessShiftsPresets.Select(p => p.Clone()));
+                GeneralHueShift.Clone(), GeneralSaturationShift.Clone(), GeneralBrightnessShift.Clone())
+            {
+                GeneralHueShiftMode = GeneralHueShiftMode,
+                GeneralSaturationShiftMode = GeneralSaturationShiftMode,
+                GeneralBrightnessShiftMode = GeneralBrightnessShiftMode
+            };
         }
 
         private void Init(HsbColor baseColor, int size)
@@ -176,9 +216,9 @@ namespace ColorRampGenerator.Models
                 if (i < middle)
                 {
                     Colors.Add(baseColor.Clone());
-                    HueShifts.Add(_selectedHueShiftsPreset.LeftShift);
-                    SaturationShifts.Add(_selectedSaturationShiftsPreset.LeftShift);
-                    BrightnessShifts.Add(_selectedBrightnessShiftsPreset.LeftShift);
+                    HueShifts.Add(GeneralHueShift.Value);
+                    SaturationShifts.Add(GeneralSaturationShift.Value);
+                    BrightnessShifts.Add(GeneralBrightnessShift.Value);
                 }
                 else if (i == middle)
                 {
@@ -190,9 +230,9 @@ namespace ColorRampGenerator.Models
                 else
                 {
                     Colors.Add(baseColor.Clone());
-                    HueShifts.Add(_selectedHueShiftsPreset.RightShift);
-                    SaturationShifts.Add(_selectedSaturationShiftsPreset.RightShift);
-                    BrightnessShifts.Add(_selectedBrightnessShiftsPreset.RightShift);
+                    HueShifts.Add(GeneralHueShiftMode == ShiftMode.OppositeDirections ? GeneralHueShift.Value : GeneralHueShift * -1);
+                    SaturationShifts.Add(GeneralSaturationShiftMode == ShiftMode.OppositeDirections ? GeneralSaturationShift.Value : GeneralSaturationShift * -1);
+                    BrightnessShifts.Add(GeneralBrightnessShiftMode == ShiftMode.OppositeDirections ? GeneralBrightnessShift.Value : GeneralBrightnessShift * -1);
                 }
 
                 HueShifts[i].PropertyChanged += OnShiftPropertyChange;
@@ -230,6 +270,60 @@ namespace ColorRampGenerator.Models
                 Colors[i].Hue = baseColor.Hue + totalHueShift;
                 Colors[i].Saturation = baseColor.Saturation + totalSaturationShift;
                 Colors[i].Brightness = baseColor.Brightness + totalBrightnessShift;
+            }
+        }
+
+        private void SetHueShifts(int value)
+        {
+            var middle = HueShifts.Count / 2;
+            for (var i = 0; i < HueShifts.Count; i++)
+            {
+                if (i < middle)
+                {
+                    HueShifts[i].Value = value;
+                }
+                else if (i > middle)
+                {
+                    HueShifts[i].Value = GeneralHueShiftMode == ShiftMode.OppositeDirections
+                        ? value
+                        : value * -1;
+                }
+            }
+        }
+
+        private void SetSaturationShifts(int value)
+        {
+            var middle = SaturationShifts.Count / 2;
+            for (var i = 0; i < SaturationShifts.Count; i++)
+            {
+                if (i < middle)
+                {
+                    SaturationShifts[i].Value = value;
+                }
+                else if (i > middle)
+                {
+                    SaturationShifts[i].Value = GeneralSaturationShiftMode == ShiftMode.OppositeDirections
+                        ? value
+                        : value * -1;
+                }
+            }
+        }
+
+        private void SetBrightnessShifts(int value)
+        {
+            var middle = BrightnessShifts.Count / 2;
+            for (var i = 0; i < BrightnessShifts.Count; i++)
+            {
+                if (i < middle)
+                {
+                    BrightnessShifts[i].Value = value;
+                }
+                else if (i > middle)
+                {
+                    BrightnessShifts[i].Value = GeneralBrightnessShiftMode == ShiftMode.OppositeDirections
+                        ? value
+                        : value * -1;
+                }
             }
         }
 

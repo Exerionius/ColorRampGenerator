@@ -20,6 +20,11 @@ namespace ColorRampGenerator.Models
             _value = value;
         }
 
+        public Shift Clone()
+        {
+            return new Shift(_value);
+        }
+
         public static implicit operator int(Shift shift) => shift._value;
         public static implicit operator Shift(int value) => new Shift(value);
 
