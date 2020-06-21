@@ -26,7 +26,8 @@
         
         <!-- Ramp List -->
         <DockPanel Grid.Column="0" Margin="10,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button DockPanel.Dock="Bottom" Content="Add New" Height="Auto" Command="{Binding AddColorRampCommand}"/>
+            <Button DockPanel.Dock="Bottom" Margin="4,2,4,4" Content="Copy to clipboard" Height="Auto" Command="{Binding CopyCommand}"/>
+            <Button DockPanel.Dock="Bottom" Margin="4,0,2,4" Content="Add New" Height="Auto" Command="{Binding AddColorRampCommand}"/>
             <GroupBox DockPanel.Dock="Top" Margin="0,0,0,10" Header="Ramp List">
                 <ListBox HorizontalContentAlignment="Stretch"
                          ItemsSource="{Binding ColorRamps}"
@@ -50,7 +51,7 @@
                                     </ItemsControl.ItemContainerStyle>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Canvas Margin="1" Height="30" Background="{Binding Brush}"/>
+                                            <Canvas Height="30" Background="{Binding Brush}"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
