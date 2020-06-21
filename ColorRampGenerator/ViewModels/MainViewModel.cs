@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using ColorRampGenerator.Models;
 using ColorRampGenerator.Prism;
+using ColorRampGenerator.Tools;
 
 namespace ColorRampGenerator.ViewModels
 {
@@ -25,6 +27,7 @@ namespace ColorRampGenerator.ViewModels
         
         public DelegateCommand AddColorRampCommand { get; }
         public DelegateCommand<ColorRamp> RemoveColorRampCommand { get; }
+        public DelegateCommand CopyCommand { get; }
 
         public MainViewModel()
         {
@@ -37,6 +40,7 @@ namespace ColorRampGenerator.ViewModels
             AddColorRampCommand = new DelegateCommand(AddColorRamp);
             RemoveColorRampCommand = new DelegateCommand<ColorRamp>(RemoveColorRamp, CanRemoveRamp)
                 .ObservesProperty(() => CanRemoveAnyColorRamps);
+            CopyCommand = new DelegateCommand(CopyToClipboard);
         }
 
         private void AddColorRamp()
@@ -56,6 +60,13 @@ namespace ColorRampGenerator.ViewModels
             }
             ColorRamps.Remove(ramp);
             RaisePropertyChanged(nameof(CanRemoveAnyColorRamps));
+        }
+        
+        private void CopyToClipboard()
+        {
+            var allColors = ColorRamps.Select(r => r.Colors.ToArray());
+            var bitmapSource = BitmapHelper.CreateBitmapSource(allColors.ToList());
+            ClipboardHelper.CopyToClipboard(bitmapSource);
         }
 
         private bool CanRemoveRamp(ColorRamp ramp)
