@@ -22,7 +22,7 @@ To use the program just grab the zip file from the latest [release](https://gith
 ### Where to go from here
 * Add a couple more ramps in the list. Each ramp is independent of the others, so all ramps can have different sizes, base color settings and shifts.
 * Play with custom shifts, see how it looks in the graph.
-* Take a screenshot and use it to pick a colors in the graphic software of your choice.
+* Press the "Copy to clipboard" button and paste your palette into a graphic software of your choice.
 
 ## Contributing
 Pull requests are welcome.
@@ -33,7 +33,10 @@ The project uses free [LiveCharts](https://github.com/Live-Charts/Live-Charts/) 
 Sources of inspiration:
 * AdamCYonis' [video](https://www.youtube.com/watch?v=hkrK65FPmDI) about color palettes
 * Slynyrd's [article](https://www.slynyrd.com/blog/2018/1/10/pixelblog-1-color-palettes) about color palettes
-* [This](http://pixeljoint.com/forum/forum_posts.asp?TID=10695) PixelJoint forum thread 
+* [This](http://pixeljoint.com/forum/forum_posts.asp?TID=10695) PixelJoint forum thread
+
+Special thanks:
+* [This](https://stackoverflow.com/questions/44177115/copying-from-and-to-clipboard-loses-image-transparency/46424800#46424800) StackOverflow answer for copying alpha values to clipboard.
 
 ## License
 This project is licensed under the MIT License - see the [LICENCE.md](/LICENCE.md) file for details
