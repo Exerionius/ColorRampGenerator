@@ -1,7 +1,11 @@
 ﻿# Color Ramp Generator
-![Platform](https://img.shields.io/badge/platform-win--32%20%7C%20win--64-lightgrey) [![Licence](https://img.shields.io/badge/licence-MIT-brightgreen)](/LICENCE.md)
+[![Licence](https://img.shields.io/badge/licence-MIT-brightgreen)](/LICENCE.md)
+![Platform](https://img.shields.io/badge/platform-win--32%20%7C%20win--64-lightgrey)
+[![Version](https://img.shields.io/github/v/release/Exerionius/ColorRampGenerator?include_prereleases&label=pre-release)](https://github.com/Exerionius/ColorRampGenerator/releases)
+[![Downloads](https://img.shields.io/github/downloads-pre/Exerionius/ColorRampGenerator/v0.1.4/total?label=downloads)](https://github.com/Exerionius/ColorRampGenerator/releases)
 
-Color Ramp Generator is a nifty tool to make your life easier when you need to make a color ramp out of the base color.
+Color Ramp Generator is a nifty tool to make your life easier when you need to make a color ramp out of the base color.  
+This tool is created primarily for programmers who are struggling to create a pixel art palette, spending hours going back and forth between colors in the ramp and tweaking them one by one. Color Ramp Generator allows you to edit the whole ramp at the same time, so you always see if your colors go nicely together or not.
 
 ![Screenshot](/screenshot.png?raw=true)
 
@@ -28,7 +32,8 @@ To use the program just grab the zip file from the latest [release](https://gith
 Pull requests are welcome.
 
 ## Acknowledgment
-The project uses free [LiveCharts](https://github.com/Live-Charts/Live-Charts/) library for the graph visualization.
+The project uses free [LiveCharts](https://github.com/Live-Charts/Live-Charts/) library for the graph visualization.  
+The project contains some modified parts of [Prism](https://github.com/PrismLibrary/Prism) library. Licence can be found [here](https://github.com/PrismLibrary/Prism/blob/master/LICENSE).
 
 Sources of inspiration:
 * AdamCYonis' [video](https://www.youtube.com/watch?v=hkrK65FPmDI) about color palettes
@@ -36,7 +41,7 @@ Sources of inspiration:
 * [This](http://pixeljoint.com/forum/forum_posts.asp?TID=10695) PixelJoint forum thread
 
 Special thanks:
-* [This](https://stackoverflow.com/questions/44177115/copying-from-and-to-clipboard-loses-image-transparency/46424800#46424800) StackOverflow answer for copying alpha values to clipboard.
+* [This](https://stackoverflow.com/questions/44177115/copying-from-and-to-clipboard-loses-image-transparency/46424800#46424800) StackOverflow answer for helping copying alpha values to clipboard.
 
 ## License
 This project is licensed under the MIT License - see the [LICENCE.md](/LICENCE.md) file for details

@@ -123,7 +123,7 @@
             <!-- Hue Shift -->
             <GroupBox Header="Hue Shift" DockPanel.Dock="Top">
                 <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="5">
                         <RadioButton Content="Linear" IsChecked="{Binding SelectedColorRamp.CustomHueShifts, Converter={StaticResource BoolInverterConverter}}"/>
                         <RadioButton Content="Custom" IsChecked="{Binding SelectedColorRamp.CustomHueShifts}" Margin="10,0,0,0"/>
                     </StackPanel>
@@ -189,7 +189,7 @@
             <!-- Saturation Shift -->
             <GroupBox Header="Saturation Shift" DockPanel.Dock="Top">
                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="5">
                         <RadioButton Content="Linear" IsChecked="{Binding SelectedColorRamp.CustomSaturationShifts, Converter={StaticResource BoolInverterConverter}}"/>
                         <RadioButton Content="Custom" IsChecked="{Binding SelectedColorRamp.CustomSaturationShifts}" Margin="10,0,0,0"/>
                     </StackPanel>
@@ -255,7 +255,7 @@
             <!-- Brightness Shift -->
             <GroupBox Header="Brightness Shift" DockPanel.Dock="Top">
                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="5">
                         <RadioButton Content="Linear" IsChecked="{Binding SelectedColorRamp.CustomBrightnessShifts, Converter={StaticResource BoolInverterConverter}}"/>
                         <RadioButton Content="Custom" IsChecked="{Binding SelectedColorRamp.CustomBrightnessShifts}" Margin="10,0,0,0"/>
                     </StackPanel>
